@@ -19,10 +19,10 @@ blank_config = """{
     },
     "repos": [
         {
-            "label": "bootstrap",
-            "github_owner": "twbs",
-            "github_repo": "bootstrap",
-            "git_repo_dir": "data/bootstrap",
+            "label": "grvtest-master",
+            "github_owner": "jondb",
+            "github_repo": "grvtest",
+            "git_repo_dir": "data/grvtest",
             "branch": "master"
         }
     ]

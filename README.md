@@ -13,7 +13,7 @@ Output in csv looks like:
     41378f6a41ceb5490a4ebdfc37ec3961afead383,paul@example.com,2015-04-17 12:12:58,pull,1319,joan
     ...
 
-Main use in meeting compliance goals like "all changes are reviewed," policy, 
+Can be used to meet compliance goals like "all changes are reviewed," policy, 
 or developer best practices including strong security development lifecycle.
 
 # Install
@@ -61,9 +61,9 @@ Edit `config.json` and add your github token.
 
 # To Do
 
-TODO: Resolve the commit with the github user who pushed it.
-TODO: Stats on the review percent
-TODO: Stats on the number of lines not reviewed
-TODO: Provide a list of authorized reviewers
-TODO: Get list of authorized reviewers from github (owners/writers/contributers)
-TODO: Get list of authorized reviewers from git (a file)
+* TODO: Resolve the commit with the github user who pushed it.
+* TODO: Stats on the review percent
+* TODO: Stats on the number of lines not reviewed
+* TODO: Provide a list of authorized reviewers
+* TODO: Get list of authorized reviewers from github (owners/writers/contributers)
+* TODO: Get list of authorized reviewers from git (a file)
