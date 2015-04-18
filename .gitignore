@@ -1,0 +1,7 @@
+*.pyc
+PyGithub/
+appv2env/
+**/config.json
+**/dbgrv.db
+**/test.db
+appv2/data
