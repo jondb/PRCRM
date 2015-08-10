@@ -1,8 +1,11 @@
-README
+PRCRM
+=====
+
+Pull Request / Code Review / before Merge
 
 # Overview
 
-A tool to identify git commits that are merged into a branch bud did
+A tool to identify git commits that are merged into a branch but did
 not have a pull request reviewed by another user.
 
 Output in csv looks like:
@@ -13,50 +16,75 @@ Output in csv looks like:
     41378f6a41ceb5490a4ebdfc37ec3961afead383,paul@example.com,2015-04-17 12:12:58,pull,1319,joan
     ...
 
-Can be used to meet compliance goals like "all changes are reviewed," policy, 
-or developer best practices including strong security development lifecycle.
+Can be used to meet compliance goals like "all changes are reviewed," engineering policy, 
+ developer best practices or adherence to strong security development lifecycle.
 
 # Install
 
-## 1. Setup your github token
+## 1. Setup your github token...
 
-            // Github Token: https://github.com/settings/tokens/new
-            // Include:
-            //    repo:status
-            //    repo
-            //    public_repo
-            //    user:email
-            //    read:org
+at https://github.com/settings/tokens/new
 
-## 2. Clone the Git Review repository
+and include the following permissions
 
-    git clone <this repository>
+* repo:status
+* repo
+* public_repo
+* user:email
+* read:org
 
-## 3. Install PyGithub from jondb's fork
+## 2. Clone this repository
 
-Until the updates are merged into the PyGithub main repo.
+    git clone https://github.com/jondb/PRCRM.git
 
-    pip install git+https://github.com/jondb/PyGithub.git@master
+## 3. Install requirements
 
-## 4. Clone the grvtest repo to analyze
+    cd PRCRM
+    pip install -r requirements.txt
 
-    cd gitreview
+## 4. Test it on the test repo - clone the grvtest repo to analyze
+
     mkdir data
     cd data
     git clone https://github.com/jondb/grvtest.git
+    cd ..
+    # The default config contains instructions to scan the 
+    # test repository
+    python grv.py blank-config > config.json
+    vi config.json
+    
+Edit config.json by adding your github token. Replace the "xxx" with your token.
 
-## 5. Setup the config.json file
+Next, run the commands
 
-    cd gitreview
-    ./grv.py blank_config > config.json
+    # Create the database (cache) of github pulls
+    ./grv.py --label grvtest-master update-pulls 
+    # Get latest changes to github repo
+    ./grv.py --label grvtest-master update-repo
+    # compare pulls and commits
+    ./grv.py --label grvtest-master report-all
 
-Edit `config.json` and add your github token.
+## 5. Edit `config.json` and add your github repos to test.
 
-## 6. Analyze the grvtest repo
- 
-    ./grv.py --label grvtest-master update_pulls 
-    ./grv.py --label grvtest-master update_repo
-    ./grv.py --label grvtest-master report_all
+    Here is the config. Add as many repos/branches as you need to test.
+
+    {
+        "credentials": {
+            "github_personal_access_token": "xxx"
+        },
+        "paths": {
+            "database": "data/dbgrv.db"
+        },
+        "repos": [
+            {
+                "label": "grvtest-master",
+                "github_owner": "jondb",
+                "github_repo": "grvtest",
+                "git_repo_dir": "data/grvtest",
+                "branch": "master"
+            }
+        ]
+    }
 
 
 # To Do
