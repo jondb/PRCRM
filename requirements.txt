@@ -1,1 +1,1 @@
--e git+https://github.com/jondb/PyGithub.git@4d78fbdfcc9d3ed1d617df145f28e69df64f9654#egg=PyGithub-master
+-e git+https://github.com/jondb/PyGithub.git@master#egg=PyGithub-master
