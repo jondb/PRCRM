@@ -39,6 +39,7 @@ def rev_list(gitdir, branch, *args):
     logging.info("Changing to dir %s.", gitdir)
     cwd = os.getcwd()
     os.chdir(gitdir)
+    abs_git_dir = os.getcwd()
     logging.info("CWD: %s", os.getcwd())
     # Switch branch
     subprocess.call(['git', 'checkout', branch, '--quiet'])
@@ -68,7 +69,7 @@ def rev_list(gitdir, branch, *args):
             print e
             print "'%s'" % l
             exit()
-        ct_added, ct_removed, ct_files, files = stats(gitdir, branch, sha, parents[0], False)
+        ct_added, ct_removed, ct_files, files = stats(abs_git_dir, branch, sha, parents[0], False)
         commits.append(grvtypes.Commit(
             sha,
             parents,
@@ -134,7 +135,11 @@ re_change_count = re.compile(r'([\d]*)-?\s+(\d*)-?\s+(.*)')
 def stats(gitdir, branch, parent, head, checkout=True):
     """Updates the branch and returns the last commit (HEAD)."""
     cwd = os.getcwd()
-    os.chdir(gitdir)
+    try:
+        os.chdir(gitdir)
+    except OSError:
+        print "CWD: %s" % cwd
+        raise
 
     cache_key = head
     res = gcache.cache_get(cache_key)
